@@ -1,0 +1,26 @@
+controls:
+- children:
+  - confirm: 'This process will:<br>1) Save the entered Z offset to EEPROM<br>2) Home
+      X, Y and Z<br>3) Perform an auto level<br>4) Move the bed and head to bed centre<br>5)
+      Position the Z axis to zero<br><br>After this is complete, test with a piece
+      of paper for distance between nozzle and bed. Repeat steps adjusting Z offset
+      as required.<br><br>Before continuing: <br>1) Heat up the hot end and print
+      bed to compensate for thermal expansion.<br>2) Clean the nozzle tip removing
+      any left over filament so it''s not in the way during calibration and testing.
+      <br><br>If there is an error in the Z Offset entry, the print head will jitter
+      on the X axis to indicate a problem.'
+    input:
+    - name: Z Offset
+      parameter: zOffset
+      slider: false
+    name: Set and Test
+    script: custom/CalibrateExtruder
+  - command: M851
+    default: Not queried yet
+    name: Query For Current Offset
+    regex: Z\sOffset\s:\s([0-9.-]+)
+    template: The current offset is {0}
+    type: feedback_command
+  layout: vertical
+  name: Z Offset Calibration
+  
