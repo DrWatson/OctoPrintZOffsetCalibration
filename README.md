@@ -30,3 +30,23 @@ Installing the CalibrateExtruder File
 Completing the Installation
 ---------------------------
 1) Restart OctoPrint
+
+How to Use the Utility
+----------------------
+On the Control tab in OctoPrint, you should see a section named Z Offset Calibration. In this section are two lines. The first line is an input box allowing you to specify what you would like to set as your Z Offset to EEPROM. Not sure what to set it to? That's where the second line of controls comes in. Click the "Query For Current Offset" button. Following this click, your current offset will be shown next to the button. You can then use this value as your starting point to fine tune the Z Offset.
+
+Enter in your corrected value into the Z Offset text box and click the "Set and Test" button.
+
+If your input is not within range (between -4 and 4 by default) it will cause the print head to jitter back and forth a tiny amount to indicate an error. If your input is not found to be numeric, the same jitter will occur.
+
+If the input passes the above validation the following steps will be performed:
+1) The value will be saved to to EEPROM
+2) X, Y and Z will be homed
+3) An auto level sequence will be performed
+4) The bed and head will be centred
+5) The Z axis will be set to zero height
+
+After this is complete, test with a piece of paper for distance between nozzle and bed. Repeat steps adjusting Z offset as required.
+
+It is recommended to heat up the hot end and print bed to compensate for thermal expansion that affects calibration.
+You should also clean the nozzle tip removing any left over filament so it's not in the way during calibration and testing.
