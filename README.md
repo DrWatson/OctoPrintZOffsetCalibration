@@ -43,7 +43,7 @@ If the input passes the above validation the following steps will be performed:
 1) The value will be saved to to EEPROM
 2) X, Y and Z will be homed
 3) An auto level sequence will be performed
-4) The bed and head will be centred
+4) The bed and head will be centred (NOTE: The actual coordinates of the head will be placed at X60 Y111. Edit line 7 of CalibrateExtruder if you would rather have the head go to a different spot for testing.)
 5) The Z axis will be set to zero height
 
 After this is complete, test with a piece of paper for distance between nozzle and bed. Repeat steps adjusting Z offset as required.
