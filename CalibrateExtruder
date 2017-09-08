@@ -1,0 +1,18 @@
+{% if (parameters.zOffset|float) and (parameters.zOffset|float > -4.0|float) and (parameters.zOffset|float < 4.0|float) %} ; change 4 and -4 to different numbers for your application.
+  M851 Z{{parameters.zOffset}} ; set the offset passed into this script from the Custom Control GUI
+  M500                         ; commit updated offset to EEPROM
+  G28                          ; home all axis   
+  G29                          ; autolevel action 
+  G90                          ; put coordinate system into absolute in case it wasn't already
+  G1 X60 Y111                  ; go to a good centre-ish spot on the bed. Maybe should make this a calculation instead of hardcode.
+  G1 Z0                        ; bring the nozzle down to bed height so the user can test with paper.
+{% else %}
+  G91                          ; put coordinate system into relative mode so we can do a little jitter on the X axis indicating a problem.
+  G1 X+5                       ; put your left foot in
+  G1 X-5                       ; take your left foot  out
+  G1 X+5                       ; put your left foot in 
+  G1 X-5                       ; take your left foor out
+  G90                          ; there is no hokey pokey in 3d printers, but we will put the coordinate system into absolute mode instead. 
+{% endif %}
+
+
