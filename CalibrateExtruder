@@ -5,15 +5,15 @@
   G29                          ; autolevel action 
   G90                          ; put coordinate system into absolute in case it wasn't already
   M400                         ; make sure all commands are processed before moving.
-  G1 X60 Y111                  ; go to a good centre-ish spot on the bed. Maybe should make this a calculation instead of hardcode.
-  G1 Z0                        ; bring the nozzle down to bed height so the user can test with paper.
+  G1 X60 Y111 F6000            ; go to a good centre-ish spot on the bed.
+  G1 Z0 F200                   ; bring the nozzle down to bed height so the user can test with paper.
 {% else %}
   G91                          ; put coordinate system into relative mode so we can do a little jitter on the X axis indicating a problem.
   M400                         ; make sure all commands are processed before moving.
-  G1 X+5                       ; put your left foot in
-  G1 X-5                       ; take your left foot  out
-  G1 X+5                       ; put your left foot in 
-  G1 X-5                       ; take your left foor out
+  G1 X+5 F6000                 ; put your left foot in
+  G1 X-5 F6000                 ; take your left foot  out
+  G1 X+5 F6000                 ; put your left foot in 
+  G1 X-5 F6000                 ; take your left foor out
   G90                          ; there is no hokey pokey in 3d printers, but we will put the coordinate system into absolute mode instead. 
 {% endif %}
 
