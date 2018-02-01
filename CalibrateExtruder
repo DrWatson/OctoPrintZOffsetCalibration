@@ -1,20 +1,26 @@
-{% if (parameters.zOffset|float) and (parameters.zOffset|float > -4.0|float) and (parameters.zOffset|float < 4.0|float) %} ; change 4 and -4 to different numbers for your application.
+{% if (parameters.zOffset|float) and (parameters.zOffset|float > -7.0|float) and (parameters.zOffset|float < 7.0|float) %}
   M851 Z{{parameters.zOffset}} ; set the offset passed into this script from the Custom Control GUI
   M500                         ; commit updated offset to EEPROM
-  G28                          ; home all axis   
-  G29                          ; autolevel action 
+  G28                          ; home all axis
+  G29                          ; autolevel action
   G90                          ; put coordinate system into absolute in case it wasn't already
   M400                         ; make sure all commands are processed before moving.
-  G1 X60 Y111 F6000            ; go to a good centre-ish spot on the bed.
+
+  ; determine if the active printer profile uses the center as origin (so the middle of the bed is is 0,0)
+  ; or if origin is configured to be the lower left in which case center is half the build width and depth.
+  {% if 'lowerleft' in printer_profile.volume.origin %}
+    G1 X{{ printer_profile.volume.width / 2 }} Y{{ printer_profile.volume.depth / 2 }} F6000
+  {% else %}
+    G1 X0 Y0 F6000
+  {% endif %}
+
   G1 Z0 F200                   ; bring the nozzle down to bed height so the user can test with paper.
+
 {% else %}
   G91                          ; put coordinate system into relative mode so we can do a little jitter on the X axis indicating a problem.
-  M400                         ; make sure all commands are processed before moving.
-  G1 X+5 F6000                 ; put your left foot in
-  G1 X-5 F6000                 ; take your left foot  out
-  G1 X+5 F6000                 ; put your left foot in 
-  G1 X-5 F6000                 ; take your left foor out
-  G90                          ; there is no hokey pokey in 3d printers, but we will put the coordinate system into absolute mode instead. 
+  G1 X+5                       ; put your left foot in
+  G1 X-5                       ; take your left foot  out
+  G1 X+5                       ; put your left foot in
+  G1 X-5                       ; take your left foor out
+  G90                          ; there is no hokey pokey in 3d printers, but we will put the coordinate system into absolute mode instead.
 {% endif %}
-
-
